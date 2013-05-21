@@ -4,7 +4,6 @@
 def menu():
   selection = raw_input("Please enter selection: ").lower()
   if selection == "n":
-    printNow(selection)
     newName = raw_input("Please name your new turtle: ")
     parent.makeNewTurtle(newName)
     menu()
@@ -20,6 +19,10 @@ def menu():
     parent.moveForward()
     parent.forward()
     menu()
+  elif selection == "s":
+    newName = raw_input("Please name your new SLOW turtle: ")
+    parent.makeSlowTurtle(newName)
+    menu()
   elif selection == "g":
     parent.greetChildren()
     menu() 
@@ -27,6 +30,7 @@ def menu():
     quit
   else:
     printNow("oooops")
+    menu()
 
     
 
@@ -59,15 +63,19 @@ class ParentTurtle(Turtle):
       
   def moveForward(self):
     for child in self.children:
-      child.forward()
-      
+      child.forward(self)
+
+  def makeSlowTurtle(self,name):
+    newborn = slowTurtle(self.home)
+    newborn.setName(name)
+    self.children.append(newborn)
+    return newborn            
  
+class slowTurtle(Turtle):
+   def forward(self,num):
+     Turtle.forward(self,50)
 
 earth = makeWorld()
 parent = ParentTurtle(earth)
 menu()       
-#jimmy.forward(50)
-#sally = tina.giveBirth("sally")
-#sally.forward(100)
-#tina.greetChildren()
 
