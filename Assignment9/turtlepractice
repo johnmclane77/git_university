@@ -1,0 +1,45 @@
+import random
+
+       
+class SmartTurtle(Turtle ):
+   def drawSquareMod(self , width = 100 ):
+     for i in range (0 ,4):
+       self.turnRight ()
+       self.forward(width)
+
+class ConfusedTurtle(Turtle):
+
+  def forward(self, num):
+    Turtle.forward(self, int(num*random.random()))
+
+  def turn(self,num):
+    Turtle.turn(self, int(num*random.random()))
+
+# define a new class that is based on turtle
+class MotherTurtle(Turtle):
+
+  def __init__ (self, home):
+    Turtle.__init__(self,home)
+    self.children = []
+    self.home = home
+    self.setName("Mum")
+    
+  def giveBirth(self,name):
+    newborn = Turtle(self.home)
+    newborn.setName(name)
+    self.children.append(newborn)
+    return newborn
+    
+  def greetChildren(self):
+    for child in self.children:
+      printNow ("Hi " + (child.name))
+
+       
+earth = makeWorld()
+tina = MotherTurtle(earth)
+jimmy = tina.giveBirth("jimmy")
+jimmy.forward(50)
+sally = tina.giveBirth("sally")
+sally.forward(100)
+tina.greetChildren()
+

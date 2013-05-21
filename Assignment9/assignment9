@@ -1,0 +1,73 @@
+
+# define a new class that is based on turtle
+
+def menu():
+  selection = raw_input("Please enter selection: ").lower()
+  if selection == "n":
+    printNow(selection)
+    newName = raw_input("Please name your new turtle: ")
+    parent.makeNewTurtle(newName)
+    menu()
+  elif selection == "r":
+    parent.allTurnRight()
+    parent.turnRight()
+    menu()
+  elif selection == "l":
+    parent.allTurnLeft()
+    parent.turnLeft()
+    menu()
+  elif selection == "m":
+    parent.moveForward()
+    parent.forward()
+    menu()
+  elif selection == "g":
+    parent.greetChildren()
+    menu() 
+  elif selection == "q":
+    quit
+  else:
+    printNow("oooops")
+
+    
+
+
+class ParentTurtle(Turtle):
+
+  def __init__ (self, home):
+    Turtle.__init__(self,home)
+    self.children = []
+    self.home = home
+    self.setName("Mum")
+    
+  def makeNewTurtle(self,name):
+    newborn = Turtle(self.home)
+    newborn.setName(name)
+    self.children.append(newborn)
+    return newborn
+    
+  def greetChildren(self):
+    for child in self.children:
+      printNow ("Hi " + (child.name))
+      
+  def allTurnRight(self):
+    for child in self.children:
+      child.turnRight()
+     
+  def allTurnLeft(self):
+    for child in self.children:
+      child.turnLeft()
+      
+  def moveForward(self):
+    for child in self.children:
+      child.forward()
+      
+ 
+
+earth = makeWorld()
+parent = ParentTurtle(earth)
+menu()       
+#jimmy.forward(50)
+#sally = tina.giveBirth("sally")
+#sally.forward(100)
+#tina.greetChildren()
+
