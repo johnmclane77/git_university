@@ -63,7 +63,8 @@ class ParentTurtle(Turtle):
       
   def moveForward(self):
     for child in self.children:
-      child.forward(self)
+      #child.forward(100)
+      child.forward()
 
   def makeSlowTurtle(self,name):
     newborn = slowTurtle(self.home)
@@ -78,11 +79,13 @@ class ParentTurtle(Turtle):
     return newborn  
      
 class slowTurtle(Turtle):
-  def forward(self,num):
+#  def forward(self,num):
+#    Turtle.forward(self,num/2)
+  def forward(self):
     Turtle.forward(self,50)
-     
-class adventurousTurtle(Turtle):
-  def roam(self):
+
+#class adventurousTurtle(Turtle):
+#  def roam(self):
     
 
 earth = makeWorld()
