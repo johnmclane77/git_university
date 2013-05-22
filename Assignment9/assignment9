@@ -1,39 +1,24 @@
 
 # define a new class that is based on turtle
 
-def menu():
-  selection = raw_input("Please enter selection: ").lower()
+def menu(selection):
   if selection == "n":
     newName = raw_input("Please name your new turtle: ")
     parent.makeNewTurtle(newName)
-    menu()
   elif selection == "r":
     parent.allTurnRight()
     parent.turnRight()
-    menu()
   elif selection == "l":
     parent.allTurnLeft()
     parent.turnLeft()
-    menu()
   elif selection == "m":
     parent.moveForward()
     parent.forward()
-    menu()
   elif selection == "s":
     newName = raw_input("Please name your new SLOW turtle: ")
     parent.makeSlowTurtle(newName)
-    menu()
   elif selection == "g":
     parent.greetChildren()
-    menu() 
-  elif selection == "q":
-    quit
-  else:
-    printNow("oooops")
-    menu()
-
-    
-
 
 class ParentTurtle(Turtle):
 
@@ -49,6 +34,18 @@ class ParentTurtle(Turtle):
     self.children.append(newborn)
     return newborn
     
+  def makeSlowTurtle(self,name):
+    newborn = slowTurtle(self.home)
+    newborn.setName(name)
+    self.children.append(newborn)
+    return newborn            
+
+  def makeAdventurousTurtle(self,name):
+    newborn = adventurousTurtle(self.home)
+    newborn.setName(name)
+    self.children.append(newborn)
+    return newborn  
+
   def greetChildren(self):
     for child in self.children:
       printNow ("Hi " + (child.name))
@@ -65,18 +62,6 @@ class ParentTurtle(Turtle):
     for child in self.children:
       #child.forward(100)
       child.forward()
-
-  def makeSlowTurtle(self,name):
-    newborn = slowTurtle(self.home)
-    newborn.setName(name)
-    self.children.append(newborn)
-    return newborn            
-
-  def makeAdventurousTurtle(self,name):
-    newborn = adventurousTurtle(self.home)
-    newborn.setName(name)
-    self.children.append(newborn)
-    return newborn  
      
 class slowTurtle(Turtle):
 #  def forward(self,num):
@@ -90,5 +75,11 @@ class slowTurtle(Turtle):
 
 earth = makeWorld()
 parent = ParentTurtle(earth)
-menu()       
 
+while True:
+  selection = raw_input("Please enter selection: ").lower()
+  if selection == "q":
+    break
+  menu(selection)
+
+quit
