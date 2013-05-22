@@ -38,7 +38,7 @@ def menu():
 class ParentTurtle(Turtle):
 
   def __init__ (self, home):
-    Turtle.__init__(self,home)
+    Turtle.__init__(self,home)  
     self.children = []
     self.home = home
     self.setName("Mum")
@@ -70,10 +70,20 @@ class ParentTurtle(Turtle):
     newborn.setName(name)
     self.children.append(newborn)
     return newborn            
- 
+
+  def makeAdventurousTurtle(self,name):
+    newborn = adventurousTurtle(self.home)
+    newborn.setName(name)
+    self.children.append(newborn)
+    return newborn  
+     
 class slowTurtle(Turtle):
-   def forward(self,num):
-     Turtle.forward(self,50)
+  def forward(self,num):
+    Turtle.forward(self,50)
+     
+class adventurousTurtle(Turtle):
+  def roam(self):
+    
 
 earth = makeWorld()
 parent = ParentTurtle(earth)
