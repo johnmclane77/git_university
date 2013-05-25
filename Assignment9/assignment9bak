@@ -4,8 +4,7 @@ import random
 
 def menu(selection):
   if selection == "n":
-    newName = raw_input("Please name your new turtle: ")
-    parent.makeNewTurtle(newName)
+    parent.makeNewTurtle()
   elif selection == "h":
     parent.halfTurtles()
     repaint(earth)
@@ -19,13 +18,11 @@ def menu(selection):
     parent.moveForward()
     parent.forward()
   elif selection == "s":
-    newName = raw_input("Please name your new SLOW turtle: ")
-    parent.makeSlowTurtle(newName)
+    parent.makeSlowTurtle()
   elif selection == "g":
     parent.greetChildren()
   elif selection == "a":
-    newName = raw_input("Please name your new SLOW turtle: ")
-    parent.makeAdventurousTurtle(newName)
+    parent.makeAdventurousTurtle()
   elif selection == "x":
     parent.adventure()
 
@@ -37,21 +34,18 @@ class ParentTurtle(Turtle):
     self.home = home
     self.setName("Mum")
     
-  def makeNewTurtle(self,name):
+  def makeNewTurtle(self):
     newborn = Turtle(self.home)
-    newborn.setName(name)
     self.children.append(newborn)
     return newborn
     
-  def makeSlowTurtle(self,name):
+  def makeSlowTurtle(self):
     newborn = slowTurtle(self.home)
-    newborn.setName(name)
     self.children.append(newborn)
     return newborn            
 
-  def makeAdventurousTurtle(self,name):
+  def makeAdventurousTurtle(self):
     newborn = adventurousTurtle(self.home)
-    newborn.setName(name)
     self.children.append(newborn)
     return newborn  
 
@@ -100,6 +94,18 @@ parent.setVisible(false)
 parent.penUp()
 
 while True:
+  printNow("""
+  N - Create a new turtle
+  R - Make all turtles turn right
+  L ? Make all turtles turn left
+  M ? Make all turtles move ahead 
+  Q ? End the program
+  S ? Create a new slow turtle
+  A ? Create a new adventurous turtle
+  X ? Make all adventurous turtles roam
+  H ? Half the number of turtles (by removing the older ones)
+  """)
+  
   selection = raw_input("Please enter selection: ").lower()
   if selection == "q":
     break
