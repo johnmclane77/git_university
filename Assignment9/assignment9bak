@@ -1,44 +1,38 @@
+import random
 
 # define a new class that is based on turtle
 
-def menu():
-  selection = raw_input("Please enter selection: ").lower()
+def menu(selection):
   if selection == "n":
     newName = raw_input("Please name your new turtle: ")
     parent.makeNewTurtle(newName)
-    menu()
+  elif selection == "h":
+    parent.halfTurtles()
+    repaint(earth)
   elif selection == "r":
     parent.allTurnRight()
     parent.turnRight()
-    menu()
   elif selection == "l":
     parent.allTurnLeft()
     parent.turnLeft()
-    menu()
   elif selection == "m":
     parent.moveForward()
     parent.forward()
-    menu()
   elif selection == "s":
     newName = raw_input("Please name your new SLOW turtle: ")
     parent.makeSlowTurtle(newName)
-    menu()
   elif selection == "g":
     parent.greetChildren()
-    menu() 
-  elif selection == "q":
-    quit
-  else:
-    printNow("oooops")
-    menu()
-
-    
-
+  elif selection == "a":
+    newName = raw_input("Please name your new SLOW turtle: ")
+    parent.makeAdventurousTurtle(newName)
+  elif selection == "x":
+    parent.adventure()
 
 class ParentTurtle(Turtle):
 
   def __init__ (self, home):
-    Turtle.__init__(self,home)
+    Turtle.__init__(self,home)  
     self.children = []
     self.home = home
     self.setName("Mum")
@@ -49,9 +43,28 @@ class ParentTurtle(Turtle):
     self.children.append(newborn)
     return newborn
     
-  def greetChildren(self):
+  def makeSlowTurtle(self,name):
+    newborn = slowTurtle(self.home)
+    newborn.setName(name)
+    self.children.append(newborn)
+    return newborn            
+
+  def makeAdventurousTurtle(self,name):
+    newborn = adventurousTurtle(self.home)
+    newborn.setName(name)
+    self.children.append(newborn)
+    return newborn  
+
+  def halfTurtles(self):
+    i = 0
     for child in self.children:
-      printNow ("Hi " + (child.name))
+      i = i + 1
+    i = i / 2
+    for child in range(0,i):
+       kill = self.children[child]
+       kill.setVisible(false)
+       self.children.pop(child)
+      
       
   def allTurnRight(self):
     for child in self.children:
@@ -63,19 +76,33 @@ class ParentTurtle(Turtle):
       
   def moveForward(self):
     for child in self.children:
-      child.forward(self)
-
-  def makeSlowTurtle(self,name):
-    newborn = slowTurtle(self.home)
-    newborn.setName(name)
-    self.children.append(newborn)
-    return newborn            
- 
+      child.forward()
+  
+  def adventure(self):
+    for child in self.children:
+      if str(child.__class__) == "adventurousTurtle":
+        child.roam(self)
+        
+         
 class slowTurtle(Turtle):
-   def forward(self,num):
-     Turtle.forward(self,50)
+  def forward(self):
+    Turtle.forward(self,50)  
 
+class adventurousTurtle(Turtle):
+  def roam(self,num):
+    for i in range (0 ,4):
+      Turtle.turnRight(self)
+      Turtle.forward(self,int(100*random.random()))
+      
 earth = makeWorld()
 parent = ParentTurtle(earth)
-menu()       
+parent.setVisible(false)
+parent.penUp()
 
+while True:
+  selection = raw_input("Please enter selection: ").lower()
+  if selection == "q":
+    break
+  menu(selection)
+  
+quit

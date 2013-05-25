@@ -8,6 +8,7 @@ def menu(selection):
     parent.makeNewTurtle(newName)
   elif selection == "h":
     parent.halfTurtles()
+    repaint(earth)
   elif selection == "r":
     parent.allTurnRight()
     parent.turnRight()
@@ -31,7 +32,7 @@ def menu(selection):
 class ParentTurtle(Turtle):
 
   def __init__ (self, home):
-    Turtle.__init__(self)  
+    Turtle.__init__(self,home)  
     self.children = []
     self.home = home
     self.setName("Mum")
@@ -58,10 +59,12 @@ class ParentTurtle(Turtle):
     i = 0
     for child in self.children:
       i = i + 1
-    printNow(i)
     i = i / 2
-    del self.children[0:i]
-    
+    for child in range(0,i):
+       kill = self.children[child]
+       kill.setVisible(false)
+       self.children.pop(child)
+      
       
   def allTurnRight(self):
     for child in self.children:
@@ -73,7 +76,6 @@ class ParentTurtle(Turtle):
       
   def moveForward(self):
     for child in self.children:
-      #child.forward(100)
       child.forward()
   
   def adventure(self):
@@ -84,21 +86,23 @@ class ParentTurtle(Turtle):
          
 class slowTurtle(Turtle):
   def forward(self):
-    Turtle.forward(self,50)
+    Turtle.forward(self,50)  
 
 class adventurousTurtle(Turtle):
   def roam(self,num):
     for i in range (0 ,4):
-      self.turnRight()
-      self.forward()
+      Turtle.turnRight(self)
+      Turtle.forward(self,int(100*random.random()))
       
 earth = makeWorld()
 parent = ParentTurtle(earth)
+parent.setVisible(false)
+parent.penUp()
 
 while True:
   selection = raw_input("Please enter selection: ").lower()
   if selection == "q":
     break
   menu(selection)
-
+  
 quit
